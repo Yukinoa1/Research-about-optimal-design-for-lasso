@@ -22,7 +22,7 @@ with $a'\_i(y_1,\dots,y_{i-1}) = \left(a_i-\sum_{j=1}^{i-1}c_{ij}y_j\right)/c_{i
 To obtain a zero-mean vector, we define $\mathbf{u} = -\frac{1}{\sqrt{n}}\mathbf{Z}\_{\mathcal{A}}\mathbf{C}\_{\mathcal{A}}^{-1}\mathbf{F}\_{\mathcal{A}}^T\mathbf{e}$ .Then, $\mathbf{u}$ follows a k-dimensional normal distribution, denoted as $\mathbf{u} \sim N\_k(\mathbf{0} , \mathbf{Z}\_{\mathcal{A}}\mathbf{C}\_{\mathcal{A}}^{-1}\mathbf{Z}\_{\mathcal{A}})$ , and the probability $P(S\_{\lambda})$ can be expressed as
 
 $$
-P(S\_{\lambda}) = P(\mathbf{u} < \sqrt{n}\mathbf{Z}\_{\mathcal{A}}(\mathbf{V}\_{\mathcal{A}}^{\frac{1}{2}}\boldsymbol{\beta}_{\mathcal{A}}-\lambda\mathbf{C}\_{\mathcal{A}}^{-1}\mathbf{z}\_{\mathcal{A}})).
+P(S\_{\lambda}) = P\left(\mathbf{u} < \sqrt{n}\mathbf{Z}\_{\mathcal{A}}\left(\mathbf{V}\_{\mathcal{A}}^{\frac{1}{2}}\boldsymbol{\beta}_{\mathcal{A}}-\lambda\mathbf{C}\_{\mathcal{A}}^{-1}\mathbf{z}\_{\mathcal{A}}\right)\right).
 $$
 
 Denote $\mathbf{Z}\_{\mathcal{A}}\mathbf{C}\_{\mathcal{A}}^{-1}\mathbf{Z}\_{\mathcal{A}}$ by $\mathbf{\Sigma}$ ,and denote $\sqrt{n}\mathbf{Z}\_{\mathcal{A}}(\mathbf{V}\_{\mathcal{A}}^{\frac{1}{2}}\boldsymbol{\beta}\_{\mathcal{A}}-\lambda\mathbf{C}\_{\mathcal{A}}^{-1}\mathbf{z}\_{\mathcal{A}})$ by $\mathbf{v} = (v\_1, v\_2, \ldots, v\_k)^T$ .Then 
@@ -38,3 +38,20 @@ P(S\_{\lambda}) = \frac{1}{\sqrt{(2\pi)^k}}\int\_{-\infty}^{v'\_1}\int\_{-\infty
 $$
 
 with $\quad v'\_i(\xi\_1,\dots,\xi\_{i-1}) = \left(v\_i-\sum\_{j=1}^{i-1}\gamma\_{ij}\xi\_j\right)/\gamma\_{ii}.$
+
+## Subsequent treatment
+(1)
+
+Since the density has been reduced to the standard normal distribution, we focus on the integration region. In the nested integration of Genz (1992), we have $a'\_i(y_1,\dots,y_{i-1}) = \left(a_i-\sum_{j=1}^{i-1}c_{ij}y_j\right)/c_{ii}\quad$ and $\quad b'\_i(y_1,\dots, y_{i-1}) = \left(b_i-\sum_{j=1}^{i-1}c_{ij}y_j\right)/c_{ii}.$ We note that the length of the $i$ -th integration interval is $b'\_i(y_1,\dots, y_{i-1})-a'\_i(y_1,\dots,y_{i-1}) = (b\_i-a\_i)/c\_{ii}$ ,which is independent of the first $i-1$ random variables, thus convenient to handle. In our problem, $b\_i = v\_i, c\_{ij} = \gamma\_{ij},$ and all $a\_i$ are identically $-\infty$ ;therefore, we we initially thought that we might only consider the quantities $\frac{b\_i}{\gamma\_{ii}}$ .To comprehensively account for the regions corresponding to all components, we considered adopting the criterion 
+
+$$
+\underset{\mathbf{C}\_{\mathcal{A}}}{\mathrm{argmax}}\prod\_{i=1}^k\frac{v\_i}{\gamma\_{ii}} = \underset{\mathbf{C}\_{\mathcal{A}}}{\mathrm{argmax}}\frac{\mathbf{v}^T\mathbf{1}}{|\mathbf{\Gamma}|} = \underset{\mathbf{C}\_{\mathcal{A}}}{\mathrm{argmax}}|\mathbf{\Gamma}|^{-1}\mathbf{v}^T\mathbf{1} = \underset{\mathbf{C}\_{\mathcal{A}}}{\mathrm{argmax}}|(\mathbf{Z}\_{\mathcal{A}}\mathbf{C}\_{\mathcal{A}}^{-1}\mathbf{Z}\_{\mathcal{A}})^{-1}|\left(\mathbf{Z}\_{\mathcal{A}}\left(\mathbf{V}\_{\mathcal{A}}^{\frac{1}{2}}\boldsymbol{\beta}\_{\mathcal{A}}-\lambda\mathbf{C}\_{\mathcal{A}}^{-1}\mathbf{z}\_{\mathcal{A}}\right)\right)^T\mathbf{1}.
+$$
+
+We had originally intended to perform matrix differentiation, explore whether explicit solutions exist in the one‑ or two‑parameter cases, examine the first and second derivatives, and investigate the extremum points and local maxima.
+
+(2)
+
+However, we have found that the above derivation and criterion are not rigorous.
+
+For the normal distribution, the interval length has no practical meaning. Two intervals of the same length located at different positions can yield vastly different integral values; in particular, when the midpoint lies at the origin, the integral value is maximized. The integral kernel of the Genz (1992) algorithm is $\mathbf{\Phi(b'\_i)}-\mathbf{\Phi(a'\_i)}$ ,not $b'\_i-a'\_i$ .Since our lower bounds are all $-\infty$ ,the probability is equivalent to $\mathbf{\Phi(b'\_i)}$ ,but the numerator of $b'\_i$ still contains the term $\sum_{j=1}^{i-1}c_{ij}y_j$ .If we forcibly take differences and ignore the summation term, we are effectively eliminating the correlation artificially. If we intend to differentiate to study the design properties, the chain rule must be applied to $\mathbf{\Phi(b'\_i)}$ and the $y\_j$ 's inside the summation are integration variables, which cannot be treated as constants and canceled out.
